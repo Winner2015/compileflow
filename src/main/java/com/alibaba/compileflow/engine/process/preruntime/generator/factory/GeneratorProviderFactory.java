@@ -19,8 +19,9 @@ package com.alibaba.compileflow.engine.process.preruntime.generator.factory;
 import com.alibaba.compileflow.engine.process.preruntime.generator.provider.NodeGeneratorProvider;
 
 /**
- * @author yusu
- */
+ * @description GeneratorProvider的provider，返回GeneratorProvider实例
+ * @author chenlongfei
+*/
 public interface GeneratorProviderFactory {
 
     NodeGeneratorProvider create();

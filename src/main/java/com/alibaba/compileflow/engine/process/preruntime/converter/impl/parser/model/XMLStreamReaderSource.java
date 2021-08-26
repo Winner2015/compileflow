@@ -23,9 +23,9 @@ import javax.xml.stream.XMLStreamException;
 import javax.xml.stream.XMLStreamReader;
 
 /**
- * @author wuxiang
- * @author yusu
- */
+ * @description 使用javax.xml.stream工具包读取文件
+ * @author chenlongfei
+*/
 public class XMLStreamReaderSource implements XMLSource {
 
     private static final String COMPILE_FLOW_NAMESPACE = "http://compileflow.alibaba.com";

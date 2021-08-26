@@ -19,9 +19,9 @@ package com.alibaba.compileflow.engine.process.preruntime.converter.impl.parser.
 import com.alibaba.compileflow.engine.process.preruntime.converter.impl.parser.Parser;
 
 /**
- * @author wuxiang
- * @author yusu
- */
+ * @description 解析器的获取与注册
+ * @author chenlongfei
+*/
 public interface ParserProvider<T extends Parser> {
 
     T getParser(String name);

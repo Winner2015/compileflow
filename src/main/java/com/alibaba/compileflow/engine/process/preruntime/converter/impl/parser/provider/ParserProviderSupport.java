@@ -17,9 +17,9 @@
 package com.alibaba.compileflow.engine.process.preruntime.converter.impl.parser.provider;
 
 /**
- * @author wuxiang
- * @author yusu
- */
+ * @description 获取ParserProvider
+ * @author chenlongfei
+*/
 public interface ParserProviderSupport<T extends ParserProvider> {
 
     T getParserProvider();

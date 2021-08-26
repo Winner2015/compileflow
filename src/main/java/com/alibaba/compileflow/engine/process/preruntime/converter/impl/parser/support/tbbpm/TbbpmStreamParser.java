@@ -32,9 +32,9 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 /**
- * @author wuxiang
- * @author yusu
- */
+ * @description
+ * @author chenlongfei
+*/
 public class TbbpmStreamParser extends AbstractFlowStreamParser<TbbpmModel> {
 
     public static TbbpmStreamParser getInstance() {
@@ -48,7 +48,7 @@ public class TbbpmStreamParser extends AbstractFlowStreamParser<TbbpmModel> {
 
     @Override
     protected TbbpmModel convertToFlowModel(Element top) {
-        if (top instanceof BpmNode) {
+        if (top instanceof BpmNode) { //XML的根节点
             BpmNode bpmNode = (BpmNode)top;
 
             List<FlowNode> allNodes = bpmNode.getAllNodes();
@@ -79,7 +79,7 @@ public class TbbpmStreamParser extends AbstractFlowStreamParser<TbbpmModel> {
 
         List<FlowNode> allNodes = bpmNode.getAllNodes();
         tbbpmModel.setAllNodes(allNodes);
-        List<FlowNode> runtimeNodes = buildRuntimeNodes(allNodes);
+        List<FlowNode> runtimeNodes = buildRuntimeNodes(allNodes); //过滤掉注释节点
         tbbpmModel.setRuntimeNodes(runtimeNodes);
 
         buildFlowTransition(tbbpmModel);
@@ -89,20 +89,26 @@ public class TbbpmStreamParser extends AbstractFlowStreamParser<TbbpmModel> {
     private void buildFlowVar(BpmNode bpmNode, TbbpmModel tbbpmModel) {
         List<IVar> vars = bpmNode.getVars();
         if (CollectionUtils.isNotEmpty(vars)) {
-            tbbpmModel.setVars(vars);
+            tbbpmModel.setVars(vars); //全部参数
+
+            //根据参数类型，分为三组
             tbbpmModel.setParamVars(buildTypeVars(vars, "param"));
             tbbpmModel.setReturnVars(buildTypeVars(vars, "return"));
             tbbpmModel.setInnerVars(buildTypeVars(vars, "inner"));
         }
     }
 
+    //根据节点的出站连接，建立节点的上下游链路
     private void buildFlowTransition(NodeContainer<FlowNode> nodeContainer) {
         List<FlowNode> allNodes = nodeContainer.getAllNodes();
         for (FlowNode node : allNodes) {
+            //出站连接属于子节点，在解析XML文件时就被塞到了父节点当中
             List<Transition> outgoingTransitions = node.getOutgoingTransitions();
             if (CollectionUtils.isNotEmpty(outgoingTransitions)) {
                 for (Transition outgoingTransition : outgoingTransitions) {
-                    FlowNode toNode = nodeContainer.getNode(outgoingTransition.getTo());
+                    FlowNode toNode = nodeContainer.getNode(outgoingTransition.getTo()); //下游节点
+
+                    //设置上下游节点的关系
                     node.addOutgoingNode(toNode);
                     toNode.addIncomingTransition(outgoingTransition);
                     toNode.addIncomingNodes(node);

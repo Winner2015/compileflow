@@ -20,9 +20,10 @@ import com.alibaba.compileflow.engine.process.preruntime.converter.impl.parser.m
 import com.alibaba.compileflow.engine.process.preruntime.converter.impl.parser.model.FlowSource;
 
 /**
- * @author wuxiang
- * @author yusu
- */
+ * @description 单一职责：XML文件流，解析成流程的数据模型
+
+ * @author chenlongfei
+*/
 public interface FlowParser<S extends FlowSource, R> extends Parser {
 
     R parse(S source);

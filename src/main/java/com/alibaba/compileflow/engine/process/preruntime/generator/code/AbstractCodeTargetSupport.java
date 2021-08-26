@@ -25,13 +25,14 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * @author yusu
- */
+ * @description 实现了一些添加代码体的基础操作：添加大括号、添加缩进等
+ * @author chenlongfei
+*/
 public abstract class AbstractCodeTargetSupport implements CodeTargetSupport {
 
     protected StringBuffer codeBuffer = new StringBuffer();
 
-    private CodeTargetSupport classTarget;
+    private CodeTargetSupport classTarget; //关联的目标类
 
     private List<String> annotations = new ArrayList<>(2);
 
@@ -114,6 +115,7 @@ public abstract class AbstractCodeTargetSupport implements CodeTargetSupport {
         }
     }
 
+    //为类、方方等添加注解
     public boolean addFormattedAnnotation(int indent) {
         if (CollectionUtils.isNotEmpty(annotations)) {
             for (String annotation : annotations) {

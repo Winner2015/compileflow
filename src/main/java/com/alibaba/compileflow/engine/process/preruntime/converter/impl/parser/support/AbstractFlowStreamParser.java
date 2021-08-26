@@ -43,8 +43,8 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 /**
- * @author wuxiang
- * @author yusu
+ * @description 文件流——》流程数据模型
+ * @author chenlongfei
  */
 public abstract class AbstractFlowStreamParser<R> implements FlowStreamParser<R> {
 
@@ -55,10 +55,12 @@ public abstract class AbstractFlowStreamParser<R> implements FlowStreamParser<R>
 
     @Override
     public R parse(FlowStreamSource source, ParseConfig parseConfig) {
+
+        //使用javax.xml工具包，解析配置文件
         XMLInputFactory xmlInputFactory = XMLInputFactory.newInstance();
 
         try {
-            if (parseConfig.isValidateSchema()) {
+            if (parseConfig.isValidateSchema()) { //使用.xsd文件，校验XML
                 validateSchema(source.getFlow());
             }
 
@@ -82,15 +84,17 @@ public abstract class AbstractFlowStreamParser<R> implements FlowStreamParser<R>
 
     protected R parseFlowModel(XMLSource xmlSource) throws Exception {
         ParseContext parseContext = new ParseContext();
-        while (xmlSource.hasNext()) {
+        while (xmlSource.hasNext()) { //实际上只会循环一次，因为根节点只有一个
             String elementName = xmlSource.nextElementName();
             if (elementName != null) {
+                //拿到对应的元素解析器，
                 getFlowElementParserProvider().getParser(elementName).parse(xmlSource, parseContext);
             }
         }
         return convertToFlowModel(parseContext.getTop());
     }
 
+    //获取XML解析器工厂类
     protected abstract AbstractFlowElementParserProvider getFlowElementParserProvider();
 
     protected abstract R convertToFlowModel(Element top);

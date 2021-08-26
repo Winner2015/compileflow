@@ -19,9 +19,9 @@ package com.alibaba.compileflow.engine.process.preruntime.converter.impl.parser.
 import java.io.InputStream;
 
 /**
- * @author wuxiang
- * @author yusu
- */
+ * @description 定义流程的资源流
+ * @author chenlongfei
+*/
 public interface FlowStreamSource extends FlowSource<InputStream> {
 
 }

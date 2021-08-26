@@ -24,8 +24,8 @@ import java.io.InputStream;
 import java.net.URL;
 
 /**
- * @author wuxiang
- * @author yusu
+ * @description 定义流程的资源流，使用URL定位
+ * @author chenlongfei
  */
 public class UrlFlowStreamSource implements FlowStreamSource {
 

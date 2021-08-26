@@ -25,14 +25,15 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * @author yusu
+ * @description 可以生成类的变量
+ * @author chenlongfei
  */
 public class FieldTarget extends AbstractCodeTargetSupport implements CodeTarget {
 
     private String name;
-    private ClassWrapper type;
-    private List<Modifier> modifiers = new ArrayList<>();
-    private String initialization;
+    private ClassWrapper type; //字段类型
+    private List<Modifier> modifiers = new ArrayList<>(); //字段修饰符
+    private String initialization; //代码片段，用于将字段置为默认值（如果配置了）
 
     @Override
     public String getName() {

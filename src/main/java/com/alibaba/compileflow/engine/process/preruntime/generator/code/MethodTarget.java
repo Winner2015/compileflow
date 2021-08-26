@@ -27,7 +27,8 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 /**
- * @author yusu
+ * @description 可以生成类的方法
+ * @author chenlongfei
  */
 public class MethodTarget extends AbstractCodeTargetSupport implements CodeTarget {
 

@@ -19,11 +19,18 @@ package com.alibaba.compileflow.engine.process.preruntime.generator;
 import com.alibaba.compileflow.engine.process.preruntime.generator.code.CodeTargetSupport;
 
 /**
- * @author wuxiang
- * @author yusu
- */
+ * @description 代码生成器
+ * 是个包装接口，负责打杂，代码生委托CodeTargetSupport来完成
+ * @author chenlongfei
+*/
 public interface Generator {
 
+    /**
+     * @description 生成代码，存于AbstractCodeTargetSupport的StringBuffer
+     * @param codeTargetSupport 执行代码生成的真正实体类
+     * @return
+     * @author chenlongfei
+    */
     void generateCode(CodeTargetSupport codeTargetSupport);
 
 }

@@ -25,8 +25,9 @@ import java.util.Objects;
 import java.util.stream.Collectors;
 
 /**
- * @author yusu
- */
+ * @description 封装了类的描述信息：包名、类名、泛化参数等
+ * @author chenlongfei
+*/
 public class ClassWrapper {
 
     private static final String BEAN_HOLD_NAME = "$TODO";

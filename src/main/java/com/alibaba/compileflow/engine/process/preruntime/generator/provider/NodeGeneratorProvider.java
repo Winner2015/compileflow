@@ -20,8 +20,9 @@ import com.alibaba.compileflow.engine.definition.common.Node;
 import com.alibaba.compileflow.engine.process.preruntime.generator.Generator;
 
 /**
- * @author yusu
- */
+ * @description NodeGenerator工厂类，提供NodeGenerator的注册与获取
+ * @author chenlongfei
+*/
 public interface NodeGeneratorProvider {
 
     Generator getGenerator(Node node);

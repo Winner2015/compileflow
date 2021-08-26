@@ -19,9 +19,9 @@ package com.alibaba.compileflow.engine.process.preruntime.converter.impl.parser;
 import com.alibaba.compileflow.engine.process.preruntime.converter.impl.parser.model.FlowStreamSource;
 
 /**
- * @author wuxiang
- * @author yusu
- */
+ * @description 文件流——》流程数据模型
+ * @author chenlongfei
+*/
 public interface FlowStreamParser<R> extends FlowParser<FlowStreamSource, R> {
 
 }

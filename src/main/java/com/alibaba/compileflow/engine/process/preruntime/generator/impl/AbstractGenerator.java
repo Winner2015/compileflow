@@ -22,9 +22,9 @@ import com.alibaba.compileflow.engine.process.preruntime.generator.code.ClassTar
 import com.alibaba.compileflow.engine.process.preruntime.generator.code.CodeTargetSupport;
 
 /**
- * @author wuxiang
- * @author yusu
- */
+ * @description 提供了一些公用方法
+ * @author chenlongfei
+*/
 public abstract class AbstractGenerator implements Generator {
 
     protected void addImportedType(CodeTargetSupport codeTargetSupport, Class clazz) {

@@ -19,14 +19,14 @@ package com.alibaba.compileflow.engine.process.preruntime.converter.impl.parser.
 import com.alibaba.compileflow.engine.definition.common.Element;
 
 /**
- * @author wuxiang
- * @author yusu
- */
+ * @description 解析XML节点时的上下文
+ * @author chenlongfei
+*/
 public class ParseContext {
 
-    private Element top;
+    private Element top; //根节点，就一个，设置了就不会变
 
-    private Element parent;
+    private Element parent; //当前节点的父节点，随着递归不断变化
 
     public Element getTop() {
         return top;

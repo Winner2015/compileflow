@@ -29,8 +29,12 @@ import com.alibaba.compileflow.engine.process.preruntime.generator.impl.containe
 import com.alibaba.compileflow.engine.runtime.impl.AbstractProcessRuntime;
 
 /**
- * @author yusu
- */
+ * @description 代码生成器工厂类，单例模式
+ * 提供两种类型的代码生成器：
+ * 1、节点容器：一个完整的流程
+ * 2、动作：流程的一个节点，方法调用？
+ * @author chenlongfei
+*/
 public class GeneratorFactory {
 
     public static GeneratorFactory getInstance() {

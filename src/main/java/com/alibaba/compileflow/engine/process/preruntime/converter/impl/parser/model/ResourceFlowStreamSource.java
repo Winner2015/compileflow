@@ -22,9 +22,9 @@ import com.alibaba.compileflow.engine.common.utils.ClassLoaderUtils;
 import java.io.InputStream;
 
 /**
- * @author wuxiang
- * @author yusu
- */
+ * @description 定义流程的资源流，位于classpath使用ClassLoader加载
+ * @author chenlongfei
+*/
 public class ResourceFlowStreamSource implements FlowStreamSource {
 
     private String resource;

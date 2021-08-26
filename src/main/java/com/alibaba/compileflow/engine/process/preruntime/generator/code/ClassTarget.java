@@ -27,31 +27,32 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 /**
- * @author yusu
- */
+ * @description 可以生成一个类
+ * @author chenlongfei
+*/
 public class ClassTarget extends AbstractCodeTargetSupport implements CodeTarget {
 
-    private String packageName;
+    private String packageName; //包路径
 
-    private Set<ClassWrapper> importedTypes = new HashSet<>();
+    private Set<ClassWrapper> importedTypes = new HashSet<>(); //依赖的外部类
 
-    private Set<ClassWrapper> staticImports = new HashSet<>();
+    private Set<ClassWrapper> staticImports = new HashSet<>(); //依赖的静态类
 
-    private List<Modifier> modifiers = new ArrayList<>();
+    private List<Modifier> modifiers = new ArrayList<>(); //类的修饰符
 
     private String fullName;
 
     private String name;
 
-    private ClassWrapper superClass;
+    private ClassWrapper superClass; //父类
 
     private List<ClassWrapper> superInterfaces = new ArrayList<>(2);
 
-    private List<String> commentLines = new ArrayList<>();
+    private List<String> commentLines = new ArrayList<>(); //注释行
 
-    private List<FieldTarget> fields = new ArrayList<>();
+    private List<FieldTarget> fields = new ArrayList<>(); //类变量
 
-    private List<MethodTarget> methods = new ArrayList<>();
+    private List<MethodTarget> methods = new ArrayList<>(); //类方法
 
     public String getFullName() {
         return fullName;

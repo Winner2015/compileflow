@@ -1,8 +1,8 @@
 package com.alibaba.compileflow.engine;
 
 /**
- * @author wuxiang
- * @author yusu
+ * @description 流程的数据模型
+ * @author chenlongfei
  */
 public interface FlowModel {
 

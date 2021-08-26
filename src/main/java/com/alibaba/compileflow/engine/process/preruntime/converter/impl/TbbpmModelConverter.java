@@ -25,8 +25,9 @@ import com.alibaba.compileflow.engine.process.preruntime.converter.impl.writer.s
 import java.io.OutputStream;
 
 /**
- * @author yusu
- */
+ * @description TBBPM转换器：BPM文件——》TbbpmModel，单例模式
+ * @author chenlongfei
+*/
 public class TbbpmModelConverter implements FlowModelConverter<TbbpmModel> {
 
     public static TbbpmModelConverter getInstance() {
@@ -35,6 +36,7 @@ public class TbbpmModelConverter implements FlowModelConverter<TbbpmModel> {
 
     @Override
     public TbbpmModel convertToModel(FlowStreamSource flowStreamSource) {
+        //实际上是个空壳，具体工作是委托给TbbpmStreamParser来实现的
         return TbbpmStreamParser.getInstance().parse(flowStreamSource);
     }
 

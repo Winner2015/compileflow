@@ -29,8 +29,9 @@ import com.alibaba.compileflow.engine.process.preruntime.converter.impl.parser.p
 import com.alibaba.compileflow.engine.process.preruntime.converter.impl.parser.provider.support.TbbpmElementParserProvider;
 
 /**
- * @author yusu
- */
+ * @description  Tbbpm的XML节点解析器
+ * @author chenlongfei
+*/
 public abstract class AbstractTbbpmElementParser<E extends Element> extends AbstractFlowElementParser<E> {
 
     @Override
@@ -41,6 +42,8 @@ public abstract class AbstractTbbpmElementParser<E extends Element> extends Abst
     @Override
     @SuppressWarnings("unchecked")
     protected boolean attachPlatformChildElement(Element childElement, E element, ParseContext parseContext) {
+
+        //存在附属关系的父子节点
         if (element instanceof FlowNode && childElement instanceof Transition) {
             ((FlowNode)element).addOutgoingTransition((Transition)childElement);
             return true;

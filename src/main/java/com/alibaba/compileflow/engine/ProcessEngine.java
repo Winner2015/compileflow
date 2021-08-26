@@ -19,20 +19,31 @@ package com.alibaba.compileflow.engine;
 import java.util.Map;
 
 /**
- * @author wuxiang
- * @author yusu
- */
+ * @description 流程引擎的顶层接口，抽象出了引擎的基本功能，比如：执行流程、加载配置文件、代码编译等
+ * @author chenlongfei
+*/
 public interface ProcessEngine<T extends FlowModel> {
 
+    /**
+     * @description 执行指定流程
+     * @param code 流程唯一code
+     * @param context 上下文参数
+     * @return 执行结果
+     * @author chenlongfei
+    */
     Map<String, Object> execute(String code, Map<String, Object> context);
 
     @Deprecated
-    Map<String, Object> start(String code, Map<String, Object> context);
+    Map<String, Object> start(String code, Map<String, Object> context); //已废弃
+    void preCompile(String... codes); //已废弃，无调用
+    void reload(String code);//已废弃，无调用
 
-    void preCompile(String... codes);
-
-    void reload(String code);
-
+    /**
+     * @description 加载、解析流程的配置文件，并将其转换为流程的数据模型
+     * @param code 流程唯一code
+     * @return 流程的数据模型
+     * @author chenlongfei
+    */
     T load(String code);
 
     String getJavaCode(String code);

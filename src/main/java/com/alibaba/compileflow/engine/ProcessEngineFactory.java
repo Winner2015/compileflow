@@ -27,18 +27,22 @@ import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
 /**
- * @author wuxiang
- * @author yusu
+ * @description 流程引擎工厂类，持有引擎类型——》引擎实例的Map，引擎实例为单例
+ * @author chenlongfei
  */
 public class ProcessEngineFactory {
 
+    //分组1：无状态引擎
     private static final Map<FlowModelType, ProcessEngine> STATELESS_PROCESS_ENGINES = new ConcurrentHashMap<>();
+
+    //分组2：有状态引擎
     private static final Map<FlowModelType, StatefulProcessEngine> STATEFUL_PROCESS_ENGINES = new HashMap<>();
 
     public static ProcessEngine getProcessEngine() {
         return getStatelessProcessEngine(FlowModelType.TBBPM);
     }
 
+    //根据指定类型，获取无状态的引擎实例
     public static ProcessEngine getStatelessProcessEngine(FlowModelType flowModelType) {
         return STATELESS_PROCESS_ENGINES.computeIfAbsent(flowModelType, type -> {
             if (FlowModelType.BPMN.equals(flowModelType)) {

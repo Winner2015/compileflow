@@ -17,8 +17,11 @@
 package com.alibaba.compileflow.engine.process.preruntime.generator.code;
 
 /**
- * @author yusu
- */
+ * @description 代码
+ * 四个子类：
+ * 1、ClassTarget：
+ * @author chenlongfei
+*/
 public interface CodeTarget {
 
     String getName();

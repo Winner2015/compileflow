@@ -21,10 +21,17 @@ import com.alibaba.compileflow.engine.process.preruntime.converter.impl.parser.m
 import java.io.OutputStream;
 
 /**
- * @author yusu
- */
+ * @description 转换器：bpm文件——》标准数据模型
+ * @author chenlongfei
+*/
 public interface FlowModelConverter<T> {
 
+    /**
+     * @description 转换操作
+     * @param flowStreamSource 配置文件的IO流
+     * @return 标准数据模型
+     * @author chenlongfei
+    */
     T convertToModel(FlowStreamSource flowStreamSource);
 
     OutputStream convertToStream(T model);

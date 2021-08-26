@@ -20,8 +20,8 @@ import java.io.ByteArrayInputStream;
 import java.io.InputStream;
 
 /**
- * @author wuxiang
- * @author yusu
+ * @description 定义流程的资源流，使用字符串存储
+ * @author chenlongfei
  */
 public class StringFlowStreamSource implements FlowStreamSource {
 

@@ -21,8 +21,8 @@ import com.alibaba.compileflow.engine.process.preruntime.converter.impl.parser.m
 import com.alibaba.compileflow.engine.process.preruntime.converter.impl.parser.model.XMLSource;
 
 /**
- * @author wuxiang
- * @author yusu
+ * @description XML元素——》流程节点数据模型
+ * @author chenlongfei
  */
 public interface FlowElementParser<E extends Element> extends Parser {
 

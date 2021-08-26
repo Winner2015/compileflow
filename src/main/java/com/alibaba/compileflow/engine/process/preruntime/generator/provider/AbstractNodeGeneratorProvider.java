@@ -27,8 +27,9 @@ import java.util.Map;
 import java.util.Optional;
 
 /**
- * @author yusu
- */
+ * @description 持有全部的代码生成器
+ * @author chenlongfei
+*/
 public abstract class AbstractNodeGeneratorProvider implements NodeGeneratorProvider {
 
     protected AbstractProcessRuntime runtime;

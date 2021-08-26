@@ -23,9 +23,9 @@ import com.alibaba.compileflow.engine.process.preruntime.converter.impl.parser.p
 import java.util.*;
 
 /**
- * @author wuxiang
- * @author yusu
- */
+ * @description 持有全部的XML元素解析器
+ * @author chenlongfei
+*/
 public abstract class AbstractParserProvider<T extends Parser> implements ParserProvider<T> {
 
     private List<Parser> parsers = new ArrayList<>();

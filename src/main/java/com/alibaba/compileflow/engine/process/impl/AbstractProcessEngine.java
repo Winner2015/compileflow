@@ -66,7 +66,7 @@ public abstract class AbstractProcessEngine<T extends FlowModel<? extends Transi
         runtime.recompile(code);
     }
 
-    @SuppressWarnings("unchecked")
+    //获取流程的运行时模型，有缓存
     protected <R extends AbstractProcessRuntime> R getProcessRuntime(String code) {
         String cacheKey = getCacheKey(code);
         AbstractProcessRuntime runtime = runtimeCache.computeIfAbsent(cacheKey, c ->
@@ -75,31 +75,35 @@ public abstract class AbstractProcessEngine<T extends FlowModel<? extends Transi
     }
 
     private AbstractProcessRuntime getCompiledRuntime(String code) {
+
         AbstractProcessRuntime runtime = getRuntimeFromSource(code);
-        runtime.compile();
+        runtime.compile(); //编译
         return runtime;
     }
 
     private AbstractProcessRuntime getRuntimeFromSource(String code) {
-        T flowModel = load(code);
-        AbstractProcessRuntime runtime = getRuntimeFromModel(flowModel);
-        runtime.init();
+        T flowModel = load(code); // 配置文件——》数据模型
+        AbstractProcessRuntime runtime = getRuntimeFromModel(flowModel); //数据模型——》运行时模型
+        runtime.init(); //初始化
         return runtime;
     }
 
     @Override
     @SuppressWarnings("unchecked")
     public T load(String code) {
+
+        //位于classPath的bpm文件
         FlowStreamSource flowStreamSource = loadFlowSource(code);
 
+        //委托TbbpmStreamParser解析bpm文件，生成TbbpmModel
         T flowModel = (T) getFlowModelConverter().convertToModel(flowStreamSource);
         if (flowModel == null) {
             throw new RuntimeException("No valid flow model found, code is " + code);
         }
 
-        checkCycle(flowModel);
-        checkContinuous(flowModel);
-        sortTransition(flowModel);
+        checkCycle(flowModel); //不能有循环依赖
+        checkContinuous(flowModel); //流程必须以EndElement结束
+        sortTransition(flowModel); //根据出站连接的优先级排序
 
         return flowModel;
     }
@@ -118,7 +122,7 @@ public abstract class AbstractProcessEngine<T extends FlowModel<? extends Transi
 
     private FlowStreamSource loadFlowSource(String code) {
         String filePath = convertToFilePath(code);
-        return ResourceFlowStreamSource.of(filePath);
+        return ResourceFlowStreamSource.of(filePath); //classpath资源
     }
 
     private String convertToFilePath(String code) {

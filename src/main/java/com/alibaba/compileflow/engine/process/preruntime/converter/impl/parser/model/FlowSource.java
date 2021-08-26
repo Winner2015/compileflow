@@ -17,9 +17,9 @@
 package com.alibaba.compileflow.engine.process.preruntime.converter.impl.parser.model;
 
 /**
- * @author wuxiang
- * @author yusu
- */
+ * @description 定义流程的资源
+ * @author chenlongfei
+*/
 public interface FlowSource<T> {
 
     T getFlow();

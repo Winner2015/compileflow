@@ -68,9 +68,9 @@ import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.stream.Collectors;
 
 /**
- * @author wuxiang
- * @author yusu
- */
+ * @description 运行时模型的核心实现类
+ * @author chenlongfei
+*/
 public abstract class AbstractProcessRuntime<T extends FlowModel> implements ProcessRuntime, Lifecycle {
 
     private static final Compiler COMPILER = new CompilerImpl();
@@ -80,7 +80,7 @@ public abstract class AbstractProcessRuntime<T extends FlowModel> implements Pro
     private final Map<String, String> javaCodeCache = new ConcurrentHashMap<>();
     private final Map<String, Class<?>> compiledClassCache = new ConcurrentHashMap<>();
     protected T flowModel;
-    protected ClassTarget classTarget;
+    protected ClassTarget classTarget; //流程对应的目标类，流程的代码载体
     protected NodeGeneratorProvider nodeGeneratorProvider;
     protected String code;
     private final String id;
@@ -100,7 +100,7 @@ public abstract class AbstractProcessRuntime<T extends FlowModel> implements Pro
         this.code = flowModel.getCode();
         this.name = flowModel.getName();
         this.vars = flowModel.getVars();
-        this.vars = flowModel.getVars();
+        this.vars = flowModel.getVars(); //这两行明显重复了 TODO
         this.paramVars = flowModel.getParamVars();
         this.returnVars = flowModel.getReturnVars();
         this.innerVars = flowModel.getInnerVars();
@@ -332,8 +332,8 @@ public abstract class AbstractProcessRuntime<T extends FlowModel> implements Pro
 
     @Override
     public void init() {
-        validateRuntime();
-        initClassTarget();
+        validateRuntime(); //合法性校验
+        initClassTarget(); //填充目标类信息，类名、描述符、依赖类等
         initGeneratorProvider();
         if (inited.compareAndSet(false, true)) {
             initBeanProvider();
@@ -406,12 +406,12 @@ public abstract class AbstractProcessRuntime<T extends FlowModel> implements Pro
 
     private void initClassTarget() {
         String fullClassName = getFlowClassFullName(code, id);
-        ClassWrapper classWrapper = ClassWrapper.of(fullClassName);
+        ClassWrapper classWrapper = ClassWrapper.of(fullClassName); //待生成class类的描述信息
         classTarget.addModifier(Modifier.PUBLIC);
         classTarget.setPackageName(classWrapper.getPackageName());
         classTarget.setFullName(classWrapper.getName());
         classTarget.setName(classWrapper.getShortName());
-        addJavaTypes();
+        addJavaTypes(); //添加依赖的外部类
     }
 
     private String getFlowClassFullName(String code, String id) {

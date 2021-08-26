@@ -17,11 +17,18 @@
 package com.alibaba.compileflow.engine.process.preruntime.converter.impl.parser;
 
 /**
- * @author wuxiang
- * @author yusu
- */
+ * @description 解析器接口
+ *  * 向下有两个分化的子类：
+ *  * 1、FlowStreamParser：文件流——》流程数据模型
+ *  * 2、FlowElementParser：XML元素——》流程节点数据模型
+ * @author chenlongfei
+*/
 public interface Parser {
 
+    /**
+     * @description 获取解析器的名字，方便注册到Provider的parserMap当中（name当做key）
+     * @author chenlongfei
+    */
     String getName();
 
 }

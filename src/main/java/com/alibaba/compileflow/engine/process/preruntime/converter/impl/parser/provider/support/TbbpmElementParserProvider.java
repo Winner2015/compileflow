@@ -19,13 +19,14 @@ package com.alibaba.compileflow.engine.process.preruntime.converter.impl.parser.
 import com.alibaba.compileflow.engine.process.preruntime.converter.impl.parser.support.tbbpm.*;
 
 /**
- * @author wuxiang
- * @author yusu
- */
+ * @description Tbbpm节点解析器的工厂类，单例模式
+ * @author chenlongfei
+*/
 public class TbbpmElementParserProvider extends AbstractFlowElementParserProvider {
 
     private static volatile TbbpmElementParserProvider tbbpmElementParserProvider;
 
+    //懒汉式加载 + 双重检测，单例模式的经典用法
     public static TbbpmElementParserProvider getInstance() {
         if (tbbpmElementParserProvider == null) {
             synchronized (TbbpmElementParserProvider.class) {
@@ -38,6 +39,12 @@ public class TbbpmElementParserProvider extends AbstractFlowElementParserProvide
         return tbbpmElementParserProvider;
     }
 
+    /**
+     * @description 将全部节点解析器注册到ParserProvider
+     * @param
+     * @return
+     * @author chenlongfei
+    */
     public void init() {
         registerParser(new BpmParser());
         registerParser(new StartParser());

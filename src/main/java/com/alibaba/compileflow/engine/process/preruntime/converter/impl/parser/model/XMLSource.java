@@ -17,9 +17,9 @@
 package com.alibaba.compileflow.engine.process.preruntime.converter.impl.parser.model;
 
 /**
- * @author wuxiang
- * @author yusu
- */
+ * @description 屏蔽解析实现类，对XML读取的进一步封装
+ * @author chenlongfei
+*/
 public interface XMLSource {
 
     boolean hasNext() throws Exception;

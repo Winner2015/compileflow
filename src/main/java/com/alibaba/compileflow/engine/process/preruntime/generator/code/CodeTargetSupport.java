@@ -19,8 +19,15 @@ package com.alibaba.compileflow.engine.process.preruntime.generator.code;
 import java.util.List;
 
 /**
- * @author yusu
- */
+ * @description 抽象了生成代码的子操作，比如添加一行代码体、添加大括号、添加缩进等；
+ * generateCode()方法会基于这些子操作生成最终的代码
+ * 共有四个子类：
+ * 1、ClassTarget：生成类的代码
+ * 2、MethodTarget：生成类的方法体
+ * 3、FieldTarget：生成类中的变量
+ * 4、ParamTarget：生成方法的入参
+ * @author chenlongfei
+*/
 public interface CodeTargetSupport {
 
     void addBodyLine(String line);
@@ -49,8 +56,18 @@ public interface CodeTargetSupport {
 
     String getName();
 
+    /**
+     * @description 代码生成器有多种实现，分别用于生成类、方法、字段、方法变量，
+     * 而方法、字段等代码片段是不能独立存在的，必然要关联某个类的代码体，将其添加进去，
+     * 该方法就用于获取这个目标类
+     * @author chenlongfei
+     */
     CodeTargetSupport getClassTarget();
 
+    /**
+     * @description 生成代码的核心入口
+     * @author chenlongfei
+    */
     String generateCode();
 
 }
