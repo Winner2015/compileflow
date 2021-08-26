@@ -25,7 +25,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * @description 可以生成类的变量
+ * @description 生成类的变量
  * @author chenlongfei
  */
 public class FieldTarget extends AbstractCodeTargetSupport implements CodeTarget {

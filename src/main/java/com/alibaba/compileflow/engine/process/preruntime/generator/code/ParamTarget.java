@@ -19,7 +19,7 @@ package com.alibaba.compileflow.engine.process.preruntime.generator.code;
 import com.alibaba.compileflow.engine.common.ClassWrapper;
 
 /**
- * @description 可以生成方法的入参
+ * @description 生成方法的入参
  * @author chenlongfei
  */
 public class ParamTarget extends AbstractCodeTargetSupport implements CodeTarget {

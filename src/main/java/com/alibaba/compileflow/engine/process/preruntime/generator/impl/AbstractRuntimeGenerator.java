@@ -32,7 +32,8 @@ import org.apache.commons.collections4.CollectionUtils;
 import java.util.List;
 
 /**
- * @author yusu
+ * 运行时模型——》代码
+ * 服务对象是整个BPM文件，即一个完整的流程链路
  */
 public abstract class AbstractRuntimeGenerator extends AbstractGenerator {
 
@@ -42,6 +43,7 @@ public abstract class AbstractRuntimeGenerator extends AbstractGenerator {
         this.runtime = runtime;
     }
 
+    //获取流程上下文变量的Java类型
     protected Class<?> getVarType(String varName) {
         List<IVar> vars = runtime.getVars();
         Class<?> clazz = vars.stream().filter(var -> var.getName().equals(varName))
@@ -60,6 +62,14 @@ public abstract class AbstractRuntimeGenerator extends AbstractGenerator {
         generateMethodCode(codeTargetSupport, methodName, paramVars, null, methodBodyGenerator);
     }
 
+    /**
+     * 生成方法体的代码
+     * @param codeTargetSupport 借此获取目标类
+     * @param methodName 方法名
+     * @param paramVars 入参类型
+     * @param returnVar 返回值类型
+     * @param methodBodyGenerator 方法体的代码生成器
+     */
     protected void generateMethodCode(CodeTargetSupport codeTargetSupport, String methodName,
                                       List<IVar> paramVars, IVar returnVar, Generator methodBodyGenerator) {
         MethodTarget method = new MethodTarget();
@@ -85,6 +95,7 @@ public abstract class AbstractRuntimeGenerator extends AbstractGenerator {
         return runtime.getNodeById(id) instanceof EndElement;
     }
 
+    //获取方法的形参名称，不合法则另起一个
     protected String getMethodParamName(IVar var) {
         if (isLegalVarName(var.getContextVarName())) {
             return var.getContextVarName();

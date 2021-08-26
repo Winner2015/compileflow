@@ -27,17 +27,17 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 /**
- * @description 可以生成类的方法
+ * @description 生成类的方法
  * @author chenlongfei
  */
 public class MethodTarget extends AbstractCodeTargetSupport implements CodeTarget {
 
-    private String name;
-    private ClassWrapper returnType;
+    private String name; //方法名
+    private ClassWrapper returnType; //返回值诶性
     private List<ParamTarget> parameterTypes = new ArrayList<>(3);
     private List<ClassWrapper> exceptionTypes = new ArrayList<>(1);
     private List<Modifier> modifiers = new ArrayList<>(2);
-    private List<String> bodyLines = new ArrayList<>();
+    private List<String> bodyLines = new ArrayList<>(); //方法体的代码行
 
     @Override
     public String getName() {

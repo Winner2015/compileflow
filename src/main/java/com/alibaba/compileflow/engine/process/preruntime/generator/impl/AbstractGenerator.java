@@ -22,7 +22,9 @@ import com.alibaba.compileflow.engine.process.preruntime.generator.code.ClassTar
 import com.alibaba.compileflow.engine.process.preruntime.generator.code.CodeTargetSupport;
 
 /**
- * @description 提供了一些公用方法
+ * @description 代码生成器的抽象类，提供了一些公共方法
+ * 到则一层还没有与流程引擎产生明显的关联，没有涉及运行时模型、流程节点等概念，
+ * 比较通用，好处是便于扩展，可以基于该层演化出不同的产品线
  * @author chenlongfei
 */
 public abstract class AbstractGenerator implements Generator {

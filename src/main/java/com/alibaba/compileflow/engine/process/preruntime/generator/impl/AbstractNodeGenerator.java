@@ -22,13 +22,13 @@ import com.alibaba.compileflow.engine.runtime.impl.AbstractProcessRuntime;
 import org.apache.commons.lang3.StringUtils;
 
 /**
- * @author wuxiang
- * @author yusu
+ * 流程节点——》代码
+ * 服务对象是<autoTask>、<transition>这样的一个元素
  */
 public abstract class AbstractNodeGenerator<N extends Node>
     extends AbstractRuntimeGenerator {
 
-    protected N flowNode;
+    protected N flowNode; //流程节点模型
 
     public AbstractNodeGenerator(AbstractProcessRuntime runtime, N flowNode) {
         super(runtime);
@@ -36,6 +36,7 @@ public abstract class AbstractNodeGenerator<N extends Node>
     }
 
     protected void generateNodeComment(CodeTargetSupport codeTargetSupport) {
+        //加了一行注释，表明该节点对应的数据模型和名字
         String comment = "//" + flowNode.getClass().getSimpleName();
         if (StringUtils.isNotEmpty(flowNode.getName())) {
             comment += ": " + flowNode.getName();

@@ -27,7 +27,7 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 /**
- * @description 可以生成一个类
+ * @description 生成一个类
  * @author chenlongfei
 */
 public class ClassTarget extends AbstractCodeTargetSupport implements CodeTarget {

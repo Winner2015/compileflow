@@ -29,8 +29,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * @author wuxiang
- * @author yusu
+ * 节点动作的处理（一次方法调用）——》代码，
+ * 服务对象是<actionHandle>元素
  */
 public abstract class AbstractActionGenerator extends AbstractRuntimeGenerator
     implements ActionGenerator, ActionMethodGenerator {
@@ -42,17 +42,18 @@ public abstract class AbstractActionGenerator extends AbstractRuntimeGenerator
         this.actionHandle = action.getActionHandle();
     }
 
+    //生成方法括号之间，代表入参的代码片段
     protected String generateParameterCode(CodeTargetSupport codeTargetSupport) {
-        List<IVar> methodParameters = getMethodParameters();
+        List<IVar> methodParameters = getMethodParameters(); //方法入参类型
         if (CollectionUtils.isNotEmpty(methodParameters)) {
             List<String> params = new ArrayList<>(methodParameters.size());
             for (IVar v : methodParameters) {
                 addImportedType(codeTargetSupport, DataType.getJavaClass(v.getDataType()));
-                if (v.getContextVarName() != null) {
+                if (v.getContextVarName() != null) { //从上下文中获取入参的值
                     String param = DataType.getVarTransferString(getVarType(v.getContextVarName()),
                         DataType.getJavaClass(v.getDataType()), v.getContextVarName());
                     params.add(param);
-                } else {
+                } else { //或者取默认值
                     String param = DataType.getDefaultValueString(DataType.getJavaClass(v.getDataType()),
                         v.getDefaultValue());
                     params.add(param);

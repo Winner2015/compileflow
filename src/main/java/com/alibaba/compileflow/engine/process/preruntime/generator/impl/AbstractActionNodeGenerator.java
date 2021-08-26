@@ -26,7 +26,8 @@ import com.alibaba.compileflow.engine.process.preruntime.generator.impl.action.A
 import com.alibaba.compileflow.engine.runtime.impl.AbstractProcessRuntime;
 
 /**
- * @author yusu
+ * 流程节点的动作——》代码
+ * 服务对象是<action>元素
  */
 public abstract class AbstractActionNodeGenerator<N extends Node>
     extends AbstractNodeGenerator<N> {
@@ -38,7 +39,7 @@ public abstract class AbstractActionNodeGenerator<N extends Node>
     @Override
     public void generateCode(CodeTargetSupport codeTargetSupport) {
         generateNodeComment(codeTargetSupport);
-        HasAction hasAction = (HasAction)flowNode;
+        HasAction hasAction = (HasAction)flowNode; //归属的父节点
         IAction action = hasAction.getAction();
         generateActionCode(codeTargetSupport, action);
     }
@@ -46,7 +47,7 @@ public abstract class AbstractActionNodeGenerator<N extends Node>
     protected void generateActionCode(CodeTargetSupport codeTargetSupport, IAction action) {
         if (action != null) {
             Generator actionGenerator = GeneratorFactory.getInstance().getActionGenerator(action, runtime);
-            actionGenerator.generateCode(codeTargetSupport);
+            actionGenerator.generateCode(codeTargetSupport); //生成动作代码
         }
     }
 
