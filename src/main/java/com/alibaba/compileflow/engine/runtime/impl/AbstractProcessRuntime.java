@@ -75,8 +75,11 @@ public abstract class AbstractProcessRuntime<T extends FlowModel> implements Pro
 
     private static final Compiler COMPILER = new CompilerImpl();
     private static final AtomicBoolean inited = new AtomicBoolean(false);
-    protected final Map<String, List<TransitionNode>> followingGraph = new HashMap<>();
-    protected final Map<String, List<TransitionNode>> branchGraph = new HashMap<>();
+
+    //下面两个Map，与网关节点形成的图形结构相关，在iAbstractStatelessProcessRuntime.nitGatewayGraph()中初始化
+    protected final Map<String, List<TransitionNode>> followingGraph = new HashMap<>(); //节点ID——》直接下游节点
+    protected final Map<String, List<TransitionNode>> branchGraph = new HashMap<>(); //分支起始节点——》分支节点链路
+
     private final Map<String, String> javaCodeCache = new ConcurrentHashMap<>();
     private final Map<String, Class<?>> compiledClassCache = new ConcurrentHashMap<>();
     protected T flowModel;
@@ -145,6 +148,7 @@ public abstract class AbstractProcessRuntime<T extends FlowModel> implements Pro
 
     public abstract ProcessType getProcessType();
 
+    //生成代码的入口
     public abstract String generateJavaCode();
 
     protected abstract void registerNodeGenerator(NodeContainer<TransitionNode> nodeContainer);
@@ -251,15 +255,25 @@ public abstract class AbstractProcessRuntime<T extends FlowModel> implements Pro
         return COMPILER.compileJavaCode(classTarget.getFullName(), source);
     }
 
+    /**
+     * @description 生成流程触发的入口方法
+     * @param methodName 方法名，一般为"execute"
+     * @param methodExecuteBodyGenerator 目标类的句柄
+     * @return 类似这样的一个方法"Map<String, Object> execute(Map<String, Object> _pContext)"
+     * @author chenlongfei
+    */
     protected MethodTarget generateFlowMethod(String methodName,
                                               Generator methodExecuteBodyGenerator) {
+        //
         MethodTarget methodTarget = generateMethodDefinition(methodName);
         classTarget.addMethod(methodTarget);
 
+        //流程上下文变量，全部生命为类的字段
         addVars(paramVars);
         addVars(returnVars);
         addVars(innerVars);
 
+        //第一步，如果有param类型变量，先从上下文中拿到值，即获取方法的入参
         if (CollectionUtils.isNotEmpty(paramVars)) {
             for (IVar paramVar : paramVars) {
                 String dataVar = "_pContext.get(\"" + paramVar.getName() + "\")";
@@ -280,8 +294,15 @@ public abstract class AbstractProcessRuntime<T extends FlowModel> implements Pro
             }
         }
 
+        //第二步，声明方法的返回对象，即方法的出参
         methodTarget.addBodyLine("Map<String, Object> _pResult = new HashMap<>();");
+
+        //第三步，准备好了入参跟出参，就可以处理业务逻辑了
+        //methodExecuteBodyGenerator是一个ContainerGenerator，会触发整个节点链路的编译，
+        //编译后的代码添加到execute的方法体当中
         methodExecuteBodyGenerator.generateCode(methodTarget);
+
+        //第四步，处理完毕，将结果返回
         List<String> returnVarLines = wrapReturnVarLines();
         methodTarget.addBodyLines(returnVarLines);
         methodTarget.addBodyLine("return _pResult;");
@@ -326,6 +347,7 @@ public abstract class AbstractProcessRuntime<T extends FlowModel> implements Pro
         }
     }
 
+    //将代码片段，添加到目标类当中
     protected void generateExecuteMethodBody(CodeTargetSupport codeTargetSupport) {
         nodeGeneratorProvider.getGenerator(flowModel).generateCode(codeTargetSupport);
     }
@@ -334,10 +356,10 @@ public abstract class AbstractProcessRuntime<T extends FlowModel> implements Pro
     public void init() {
         validateRuntime(); //合法性校验
         initClassTarget(); //填充目标类信息，类名、描述符、依赖类等
-        initGeneratorProvider();
+        initGeneratorProvider(); //初始化根节点的代码生成器，其他节点的代码生成器在子类注册
         if (inited.compareAndSet(false, true)) {
-            initBeanProvider();
-            initScriptExecutorProvider();
+            initBeanProvider(); //获取SpringContext
+            initScriptExecutorProvider(); //注册脚本执行器
         }
     }
 
@@ -389,10 +411,16 @@ public abstract class AbstractProcessRuntime<T extends FlowModel> implements Pro
         if (generatorProviderFactory == null) {
             throw new CompileFlowException("GeneratorProviderFactory is null");
         }
+        //创建代码生成器工厂
         nodeGeneratorProvider = generatorProviderFactory.create();
         if (nodeGeneratorProvider == null) {
             throw new CompileFlowException("NodeGeneratorProvider is null");
         }
+
+        //这个flowModel是代表了这个整个流程的数据模型，它兼具两种角色：
+        //1、存储了全部节点的容器
+        //2、根节点
+        //所以这里要注册两种代码生成器
         registerContainerGenerator(flowModel);
         registerNodeGenerator(flowModel);
     }

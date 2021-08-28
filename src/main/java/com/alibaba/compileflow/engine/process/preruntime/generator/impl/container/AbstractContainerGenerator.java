@@ -24,8 +24,7 @@ import com.alibaba.compileflow.engine.process.preruntime.generator.code.CodeTarg
 import com.alibaba.compileflow.engine.runtime.impl.AbstractProcessRuntime;
 
 /**
- * @author wuxiang
- * @author yusu
+ * 节点容器——》代码
  */
 public abstract class AbstractContainerGenerator extends AbstractRuntimeGenerator {
 

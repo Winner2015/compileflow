@@ -27,7 +27,7 @@ import java.util.Map;
 import java.util.Optional;
 
 /**
- * @description 持有全部的代码生成器
+ * @description 持有全部的代码生成器，注册与获取
  * @author chenlongfei
 */
 public abstract class AbstractNodeGeneratorProvider implements NodeGeneratorProvider {

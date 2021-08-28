@@ -63,7 +63,7 @@ public abstract class AbstractRuntimeGenerator extends AbstractGenerator {
     }
 
     /**
-     * 生成方法体的代码
+     * 生成方法体
      * @param codeTargetSupport 借此获取目标类
      * @param methodName 方法名
      * @param paramVars 入参类型
@@ -87,8 +87,8 @@ public abstract class AbstractRuntimeGenerator extends AbstractGenerator {
             method.setReturnType(ClassWrapper.of(returnVar.getDataType()));
         }
 
-        classTarget.addMethod(method);
-        methodBodyGenerator.generateCode(method);
+        classTarget.addMethod(method); //方法插入目标类
+        methodBodyGenerator.generateCode(method); //生成方法体代码
     }
 
     protected boolean isEndNode(String id) {

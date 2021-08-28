@@ -30,8 +30,7 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * @author pin
- * @author yusu
+ * 网关节点很特殊，是唯一一种拥有多个下游的节点，会形成图的结构
  */
 public class DecisionGenerator extends AbstractTbbpmActionNodeGenerator<DecisionNode> {
 
@@ -81,14 +80,14 @@ public class DecisionGenerator extends AbstractTbbpmActionNodeGenerator<Decision
                 : transition.getExpression();
             Map<String, List<TransitionNode>> branchGraph = runtime.getBranchGraph();
             List<TransitionNode> branchNodes = branchGraph.get(transition.getTo());
-            if (transition.equals(transitions.get(0))) {
+            if (transition.equals(transitions.get(0))) { //起始分支
                 String ifCondition = "if (" + condition + ") {";
                 codeTargetSupport.addBodyLine(ifCondition);
                 generateTransitionComment(codeTargetSupport, transition);
                 executeNodes(branchNodes, codeTargetSupport);
                 codeTargetSupport.addBodyLine("}");
             } else if (StringUtils.isEmpty(transition.getExpression())
-                && transition.equals(transitions.get(transitions.size() - 1))) {
+                && transition.equals(transitions.get(transitions.size() - 1))) { //结束分支
                 if (isEndNode(transition.getTo())) {
                     return;
                 }
@@ -96,7 +95,7 @@ public class DecisionGenerator extends AbstractTbbpmActionNodeGenerator<Decision
                 generateTransitionComment(codeTargetSupport, transition);
                 executeNodes(branchNodes, codeTargetSupport);
                 codeTargetSupport.addBodyLine("}");
-            } else {
+            } else {  //其余的中间分支
                 String elseIfCondition = " else if (" + condition + ") {";
                 codeTargetSupport.appendLine(elseIfCondition);
                 generateTransitionComment(codeTargetSupport, transition);
@@ -114,6 +113,7 @@ public class DecisionGenerator extends AbstractTbbpmActionNodeGenerator<Decision
 
     private void executeNodes(List<TransitionNode> flowNodes, CodeTargetSupport codeTargetSupport) {
         if (CollectionUtils.isNotEmpty(flowNodes)) {
+            //编译分支链路的后续节点
             flowNodes.stream().map(flowNode -> runtime.getNodeGeneratorProvider().getGenerator(flowNode))
                 .forEach(generator -> generator.generateCode(codeTargetSupport));
         }

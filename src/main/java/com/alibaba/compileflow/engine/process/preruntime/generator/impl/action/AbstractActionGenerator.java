@@ -29,8 +29,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * 节点动作的处理（一次方法调用）——》代码，
+ * 节点动作的处理（一次方法调用）——》代码
  * 服务对象是<actionHandle>元素
+ *
+ * 该类比较特殊的地方是，不仅继承了AbstractRuntimeGenerator，还是实现了两个接口：
+ * 1、ActionGenerator：识别动作类型，比如Java，QL表达式等
+ * 2、ActionMethodGenerator：
  */
 public abstract class AbstractActionGenerator extends AbstractRuntimeGenerator
     implements ActionGenerator, ActionMethodGenerator {

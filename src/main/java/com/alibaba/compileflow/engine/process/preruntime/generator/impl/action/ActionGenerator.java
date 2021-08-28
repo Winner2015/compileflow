@@ -19,10 +19,14 @@ package com.alibaba.compileflow.engine.process.preruntime.generator.impl.action;
 import com.alibaba.compileflow.engine.process.preruntime.generator.Generator;
 
 /**
- * @author yusu
+ * 流程动作的代码生成器，抽象父类
  */
 public interface ActionGenerator extends Generator {
 
+    /**
+     * @description 识别动作类型，比如Java，QL表达式等
+     * @author chenlongfei
+    */
     String getActionType();
 
 }

@@ -29,10 +29,10 @@ import com.alibaba.compileflow.engine.process.preruntime.generator.impl.containe
 import com.alibaba.compileflow.engine.runtime.impl.AbstractProcessRuntime;
 
 /**
- * @description 代码生成器工厂类，单例模式
+ * @description 代码生成器工厂类，单例
  * 提供两种类型的代码生成器：
- * 1、节点容器：一个完整的流程
- * 2、动作：流程的一个节点，方法调用？
+ * 1、针对节点容器：将一个完整的节点链路，变成代码
+ * 2、针对动作：将一次方法调用，变成代码
  * @author chenlongfei
 */
 public class GeneratorFactory {
@@ -41,10 +41,12 @@ public class GeneratorFactory {
         return GeneratorFactory.Holder.INSTANCE;
     }
 
+    //节点容器
     public ContainerGenerator getContainerGenerator(NodeContainer nodeContainer, AbstractProcessRuntime runtime) {
         return new ContainerGenerator(runtime, nodeContainer);
     }
 
+    //方法调用
     public AbstractActionGenerator getActionGenerator(IAction action, AbstractProcessRuntime runtime) {
         if (ActionType.JAVA.getValue().equals(action.getType())) {
             return new JavaActionGenerator(runtime, action);

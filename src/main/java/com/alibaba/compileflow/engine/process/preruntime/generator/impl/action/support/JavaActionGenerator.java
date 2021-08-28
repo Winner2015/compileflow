@@ -25,8 +25,7 @@ import com.alibaba.compileflow.engine.runtime.impl.AbstractProcessRuntime;
 import org.apache.commons.lang3.StringUtils;
 
 /**
- * @author wuxiang
- * @author yusu
+ * Java方法调用，代码生成器
  */
 public class JavaActionGenerator extends AbstractActionGenerator {
 

@@ -19,12 +19,24 @@ package com.alibaba.compileflow.engine.process.preruntime.generator.impl.action;
 import com.alibaba.compileflow.engine.process.preruntime.generator.code.CodeTargetSupport;
 
 /**
- * @author yusu
+ * 流程动作的触发，在代码层面表现为一次方法调用
  */
 public interface ActionMethodGenerator {
 
+    /**
+     * @description 生成方法名
+     * @param codeTargetSupport
+     * @return
+     * @author chenlongfei
+    */
     String generateActionMethodName(CodeTargetSupport codeTargetSupport);
 
+    /**
+     * @description 生成方法体
+     * @param codeTargetSupport 方法肯定是挂在类当中的，所以该参数肯定是一个类ClassTarget
+     * @return
+     * @author chenlongfei
+    */
     void generateActionMethodCode(CodeTargetSupport codeTargetSupport);
 
 }

@@ -28,8 +28,9 @@ import org.apache.commons.collections4.CollectionUtils;
 import java.util.List;
 
 /**
- * @author wuxiang
- * @author yusu
+ * ContainerGenerator与NodeGenerator的区别在于，
+ * ContainerGenerator处理的是完整的节点链路
+ * ContainerGenerator处理的是一个节点
  */
 public class ContainerGenerator extends AbstractContainerGenerator {
 
@@ -41,22 +42,25 @@ public class ContainerGenerator extends AbstractContainerGenerator {
     @Override
     public void generateCode(CodeTargetSupport codeTargetSupport) {
         TransitionNode startNode = (TransitionNode)nodeContainer.getStartNode();
+        //拿到起始节点，触发代码生成
         generateCode(startNode, codeTargetSupport);
     }
 
+    //递归方法，沿着节点链路，生成一个个节点的代码
     private void generateCode(TransitionNode flowNode, CodeTargetSupport codeTargetSupport) {
-        if (flowNode instanceof EndElement) {
+        if (flowNode instanceof EndElement) { //遇到结束节点，返回
             return;
         }
 
         Generator generator = getGenerator(flowNode);
         generator.generateCode(codeTargetSupport);
         if (flowNode instanceof GatewayElement) {
-            return;
+            return; //一旦遇到决策节点，后续节点的代码会交由决策节点来触发生成
         }
 
         List<TransitionNode> outgoingNodes = getOutingNodes(flowNode);
         if (CollectionUtils.isNotEmpty(outgoingNodes)) {
+            //继续处理下游节点
             for (TransitionNode outgoingNode : outgoingNodes) {
                 generateCode(outgoingNode, codeTargetSupport);
             }

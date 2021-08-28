@@ -26,8 +26,7 @@ import com.alibaba.compileflow.engine.runtime.impl.AbstractProcessRuntime;
 import java.util.List;
 
 /**
- * @author wuxiang
- * @author yusu
+ * 脚本（QL、MVEL）代码生成器的抽象父类
  */
 public abstract class AbstractScriptActionGenerator extends AbstractActionGenerator {
 
