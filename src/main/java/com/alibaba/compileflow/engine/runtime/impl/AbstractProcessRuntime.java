@@ -73,18 +73,23 @@ import java.util.stream.Collectors;
 */
 public abstract class AbstractProcessRuntime<T extends FlowModel> implements ProcessRuntime, Lifecycle {
 
-    private static final Compiler COMPILER = new CompilerImpl();
-    private static final AtomicBoolean inited = new AtomicBoolean(false);
+    private static final Compiler COMPILER = new CompilerImpl(); //负责将生成的代码编译成Class文件
+
+    private static final AtomicBoolean inited = new AtomicBoolean(false); //防止重复初始化
 
     //下面两个Map，与网关节点形成的图形结构相关，在iAbstractStatelessProcessRuntime.nitGatewayGraph()中初始化
     protected final Map<String, List<TransitionNode>> followingGraph = new HashMap<>(); //节点ID——》直接下游节点
     protected final Map<String, List<TransitionNode>> branchGraph = new HashMap<>(); //分支起始节点——》分支节点链路
 
+    //Java代码与Class的缓存
     private final Map<String, String> javaCodeCache = new ConcurrentHashMap<>();
     private final Map<String, Class<?>> compiledClassCache = new ConcurrentHashMap<>();
-    protected T flowModel;
+
     protected ClassTarget classTarget; //流程对应的目标类，流程的代码载体
-    protected NodeGeneratorProvider nodeGeneratorProvider;
+    protected NodeGeneratorProvider nodeGeneratorProvider; //代码生成器的工厂类
+
+    //以下变量都来自于流程的数据模型，从BPM文件解析而来
+    protected T flowModel;
     protected String code;
     private final String id;
     private final String name;
